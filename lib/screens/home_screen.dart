@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return const Text("No products available");
         }
 
-        /// ✅ Save the data locally ONCE
+        ///Save the data once
         if (currentProducts.isEmpty) {
           currentProducts = [...snapshot.data!];
         }
@@ -231,3 +231,4 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       );
 }
+
