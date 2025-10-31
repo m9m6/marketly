@@ -12,7 +12,7 @@ class ApiService {
     ),
   );
 
-  // 🧭 Fetch Categories
+  //  Fetch Categories
   static Future<List<CategoryModel>> getCategories() async {
     try {
       final response = await _dio.get('/products/categories');
@@ -28,7 +28,7 @@ class ApiService {
     }
   }
 
-  // 🛍️ Fetch All Products
+  // Fetch All Products
   static Future<List<Product>> getProducts() async {
     try {
       final response = await _dio.get('/products');
@@ -44,7 +44,7 @@ class ApiService {
     }
   }
 
-  // 🧩 Fetch Products by Category
+  // Fetch Products by Category
   static Future<List<Product>> getProductsByCategory(String category) async {
     try {
       final response = await _dio.get('/products/category/$category');
@@ -60,3 +60,4 @@ class ApiService {
     }
   }
 }
+
