@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/category_model.dart';
 import 'package:flutter_application_1/model/product_model.dart';
 import 'package:flutter_application_1/services/api_service.dart';
-import 'package:flutter_application_1/widgets/promo_card.dart';
-import 'package:flutter_application_1/widgets/category_chip.dart';
-import 'package:flutter_application_1/widgets/product_card.dart';
+import 'package:flutter_application_1/widgets/home_page/promo_card.dart';
+import 'package:flutter_application_1/widgets/home_page/category_chip.dart';
+import 'package:flutter_application_1/widgets/home_page/product_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Product>> productsFuture;
   late Future<List<CategoryModel>> categoriesFuture;
   String selectedCategorySlug = '';
+  List<Product> currentProducts = [];
 
   @override
   void initState() {
@@ -142,40 +143,79 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       );
 
-  Widget _buildProductGrid() =>
-      FutureBuilder<List<Product>>(
-        future: productsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Padding(
-              padding: EdgeInsets.only(top: 60),
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text("No products available");
-          }
-
-          final products = snapshot.data!;
-
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: products.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                childAspectRatio: 0.68,
-              ),
-              itemBuilder: (_, index) => ProductCard(product: products[index]),
-            ),
+ Widget _buildProductGrid() =>
+    FutureBuilder<List<Product>>(
+      future: productsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 60),
+            child: CircularProgressIndicator(),
           );
-        },
-      );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text("No products available");
+        }
+
+        /// ✅ Save the data locally ONCE
+        if (currentProducts.isEmpty) {
+          currentProducts = [...snapshot.data!];
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: currentProducts.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 0.68,
+            ),
+            itemBuilder: (_, index) {
+              final product = currentProducts[index];
+
+              return ProductCard(
+                product: product,
+                onDelete: () => _showDeleteDialog(product),
+              );
+            },
+          ),
+        );
+      },
+    );
+    
+    void _showDeleteDialog(Product product) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text("Remove Product"),
+      content: Text("Are you sure you want to remove \"${product.title}\"?"),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              currentProducts.remove(product);
+            });
+            Navigator.pop(context);
+          },
+          child: const Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildBottomNav() => BottomNavigationBar(
         selectedItemColor: Colors.green,
