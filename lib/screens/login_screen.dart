@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:marketly/screens/forget_password.dart';
 import 'home_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -202,7 +203,12 @@ class _LoginScreenState extends State<LoginScreen>
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => const ForgetPasswordScreen()),
+                        );
+                      },
                       child: const Text(
                         "Forgot Password?",
                         style: TextStyle(
@@ -219,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen>
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0A4CFF),
+                        backgroundColor: Colors.deepOrange,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),

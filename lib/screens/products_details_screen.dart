@@ -65,7 +65,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SmallDot(color: Colors.orange),
+                  SmallDot(color: Colors.deepOrange),
                   SmallDot(color: Colors.grey.shade400),
                   SmallDot(color: Colors.grey.shade400),
                 ],
@@ -78,13 +78,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: [
                 Text(
                   widget.product.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  widget.product.price.toString(),
+                  "\$${widget.product.price}",
                   style: const TextStyle(
                     fontSize: 22,
-                    color: Colors.orange,
+                    color: Colors.deepOrange,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -96,7 +98,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Row(
                   children: List.generate(
                     widget.product.rating.toInt(),
-                    (index) => const Icon(Icons.star, color: Colors.orange, size: 18),
+                        (index) => const Icon(Icons.star, color: Colors.deepOrange, size: 18),
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -126,13 +128,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 IconButton(
                   onPressed: () => setState(() => quantity > 1 ? quantity-- : null),
                   icon: const Icon(Icons.remove_circle_outline),
-                  color: Colors.teal,
+                  color: Colors.deepOrange,
                 ),
                 Text("$quantity", style: const TextStyle(fontSize: 18)),
                 IconButton(
                   onPressed: () => setState(() => quantity++),
                   icon: const Icon(Icons.add_circle_outline),
-                  color: Colors.teal,
+                  color: Colors.deepOrange,
                 ),
               ],
             ),
@@ -145,7 +147,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(14),
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Colors.deepOrange,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {},
@@ -159,14 +161,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Expanded(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.teal),
+                        side: const BorderSide(color: Colors.deepOrange),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         padding: const EdgeInsets.all(14)),
                     onPressed: () {},
                     child: const Text(
                       "Buy Now",
-                      style: TextStyle(color: Colors.teal, fontSize: 16),
+                      style: TextStyle(color: Colors.deepOrange, fontSize: 16),
                     ),
                   ),
                 ),
@@ -180,7 +182,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: const [
                 Text("Reviews",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Text("Rate", style: TextStyle(color: Colors.orange))
+                Text("Rate", style: TextStyle(color: Colors.deepOrange))
               ],
             ),
 
