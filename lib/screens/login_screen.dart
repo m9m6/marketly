@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'sign_up_screen.dart';
@@ -12,10 +14,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
+  final Dio dio = Dio();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool showPassword = false;
   bool isLoading = false;
+
   late AnimationController _controller;
   late Animation<double> _fadeAnim;
   late Animation<Offset> _slideAnim;
@@ -41,16 +45,50 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
   }
 
-  void handleLogin() async {
+  Future<void> logIn() async {
     setState(() => isLoading = true);
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() => isLoading = false);
-
-    if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+    try {
+      final Response response = await dio.post(
+        'https://accessories-eshop.runasp.net/api/auth/login',
+        data: {
+          "email": email.text.trim(),
+          "password": password.text.trim(),
+        },
       );
+
+      log('res is ${response.data}');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("✅ Login successful!"),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      }
+    } on DioException catch (e) {
+      log('dio error is ${e.response?.data ?? e.message}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "❌ Login failed: ${e.response?.data['message'] ?? 'Invalid credentials.'}",
+          ),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    } catch (e) {
+      log('exception $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Unexpected error occurred."),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -94,15 +132,15 @@ class _LoginScreenState extends State<LoginScreen>
                   const SizedBox(height: 8),
                   Text(
                     "Sign in to continue shopping",
-                    style: TextStyle(
-                        fontSize: 16, color: Colors.grey.shade600),
+                    style:
+                    TextStyle(fontSize: 16, color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 40),
 
                   // 📧 Email Field
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("Email or Phone",
+                    child: Text("Email",
                         style: TextStyle(
                             color: Colors.grey.shade700,
                             fontWeight: FontWeight.w500)),
@@ -114,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen>
                     decoration: InputDecoration(
                       prefixIcon:
                       const Icon(Icons.mail_outline, color: Colors.grey),
-                      hintText: "Enter your email or phone",
+                      hintText: "Enter your email",
                       filled: true,
                       fillColor: const Color(0xFFF7F7F7),
                       border: OutlineInputBorder(
@@ -165,10 +203,12 @@ class _LoginScreenState extends State<LoginScreen>
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text("Forgot Password?",
-                          style: TextStyle(
-                              color: Color(0xFF0A4CFF),
-                              fontWeight: FontWeight.w500)),
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                            color: Color(0xFF0A4CFF),
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -184,12 +224,16 @@ class _LoginScreenState extends State<LoginScreen>
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      onPressed: isLoading ? null : handleLogin,
+                      onPressed: isLoading ? null : logIn,
                       child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text("Log In",
-                          style: TextStyle(
-                              fontSize: 18, color: Colors.white)),
+                          ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                          : const Text(
+                        "Log In",
+                        style: TextStyle(
+                            fontSize: 18, color: Colors.white),
+                      ),
                     ),
                   ),
 
@@ -219,13 +263,18 @@ class _LoginScreenState extends State<LoginScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _socialButton(
-                          icon: Icons.g_mobiledata, label: "Google", color: Colors.red),
+                          icon: Icons.g_mobiledata,
+                          label: "Google",
+                          color: Colors.red),
                       _socialButton(
-                          icon: Icons.apple, label: "Apple", color: Colors.black),
+                          icon: Icons.apple,
+                          label: "Apple",
+                          color: Colors.black),
                     ],
                   ),
 
                   const SizedBox(height: 30),
+
                   // 📝 Register
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -271,8 +320,7 @@ class _LoginScreenState extends State<LoginScreen>
           Icon(icon, color: color, size: 22),
           const SizedBox(width: 8),
           Text(label,
-              style:
-              TextStyle(color: color, fontWeight: FontWeight.w500)),
+              style: TextStyle(color: color, fontWeight: FontWeight.w500)),
         ],
       ),
     );

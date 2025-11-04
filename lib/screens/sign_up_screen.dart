@@ -1,11 +1,11 @@
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import '../services/validator.dart';
-import 'home_screen.dart';
+import '../screens/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String routeName = '/RegisterScreen';
-
   const RegisterScreen({super.key});
 
   @override
@@ -14,13 +14,56 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
+  final Dio dio = Dio();
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
   bool isPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
+
+  Future<void> signUp() async {
+    try {
+      final Response response = await dio.post(
+        'https://accessories-eshop.runasp.net/api/auth/register',
+        data: {
+          "email": emailController.text.trim(),
+          "password": passwordController.text.trim(),
+          "firstName": firstNameController.text.trim(),
+          "lastName": lastNameController.text.trim(),
+        },
+      );
+      log('Response: $response');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Account created successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    } on DioException catch (e) {
+      log('Dio error: ${e.response?.data ?? e.message}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Sign-up failed: ${e.response?.data['message'] ?? 'Something went wrong.'}",
+          ),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    } catch (e) {
+      log('Exception: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Unexpected error occurred."),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          "Register Screen",
+          "Register",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -57,42 +100,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 30),
 
                   buildTextField(
-                    controller: nameController,
-                    label: "Full Name",
-                    hint: "Enter your full name",
+                    controller: firstNameController,
+                    label: "First Name",
+                    hint: "Enter your first name",
                     icon: Icons.person_outline,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your name";
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                    value == null || value.isEmpty ? "Required" : null,
+                  ),
+                  const SizedBox(height: 20),
+
+                  buildTextField(
+                    controller: lastNameController,
+                    label: "Last Name",
+                    hint: "Enter your last name",
+                    icon: Icons.person_outline,
+                    validator: (value) =>
+                    value == null || value.isEmpty ? "Required" : null,
                   ),
                   const SizedBox(height: 20),
 
                   buildTextField(
                     controller: emailController,
-                    label: "Email Address",
-                    hint: "Enter your email address",
+                    label: "Email",
+                    hint: "Enter your email",
                     icon: Icons.email_outlined,
                     validator: (value) => Validator.validateEmail(value!),
-                  ),
-                  const SizedBox(height: 20),
-
-                  buildTextField(
-                    controller: phoneController,
-                    label: "Phone Number",
-                    hint: "Enter your phone number",
-                    icon: Icons.phone_outlined,
-                    keyboardType: TextInputType.phone,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your phone number";
-                      } else if (!RegExp(r'^[0-9]{10,11}$').hasMatch(value)) {
-                        return "Enter a valid phone number (10–11 digits)";
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 20),
 
@@ -103,11 +135,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     icon: Icons.lock_outline,
                     obscureText: !isPasswordVisible,
                     suffixIcon: IconButton(
-                      icon: Icon(
-                        isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
+                      icon: Icon(isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;
@@ -121,15 +151,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   buildTextField(
                     controller: confirmPasswordController,
                     label: "Confirm Password",
-                    hint: "Confirm your password",
+                    hint: "Re-enter your password",
                     icon: Icons.lock_outline,
                     obscureText: !isConfirmPasswordVisible,
                     suffixIcon: IconButton(
-                      icon: Icon(
-                        isConfirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
+                      icon: Icon(isConfirmPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                       onPressed: () {
                         setState(() {
                           isConfirmPasswordVisible = !isConfirmPasswordVisible;
@@ -155,19 +183,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Account created successfully!"),
-                          ),
-                        );
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
+                        await signUp();
                       }
                     },
                     child: const Text(
@@ -186,7 +204,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       const Text("Already have an account? "),
                       GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () => Navigator.pushReplacementNamed(
+                            context, LoginScreen.routeName),
                         child: const Text(
                           "Log in",
                           style: TextStyle(
@@ -204,10 +223,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.g_mobiledata , size: 30,),
-                      const SizedBox(width: 25),
-                      Icon(Icons.facebook , size: 30,),
+                    children: const [
+                      Icon(Icons.g_mobiledata, size: 30),
+                      SizedBox(width: 25),
+                      Icon(Icons.facebook, size: 30),
                     ],
                   ),
                 ],
@@ -245,24 +264,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
-      ),
-    );
-  }
-
-  Widget buildSocialButton(String imagePath) {
-    return Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(50),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(2, 2)),
-        ],
-      ),
-      child: IconButton(
-        onPressed: () {},
-        icon: Image.asset(imagePath, width: 24, height: 24),
       ),
     );
   }
