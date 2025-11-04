@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/cart_service.dart';
 
 import '../model/product_model.dart';
 import '../widgets/product_details/rating_bars.dart';
@@ -148,7 +150,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         backgroundColor: Colors.orange,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () {
+                      CartService.addToCart(widget.product);                     
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("${widget.product.title} added to cart"),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                    },
                     child: const Text(
                       "Add to Cart",
                       style: TextStyle(color: Colors.white, fontSize: 16),
