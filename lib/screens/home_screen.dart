@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/cart_screen.dart';
 import 'package:flutter_application_1/screens/categories_screen.dart';
@@ -24,16 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Product>> productsFuture;
   late Future<List<CategoryModel>> categoriesFuture;
   String selectedCategorySlug = '';
-
   int _currentIndex = 0;
-
-  // Instead of routes, we hold widgets for each page
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const CategoriesScreen(),
-    const CartScreen(),
-    const ProfileScreen(),
-  ];
 
   @override
   void initState() {
@@ -51,18 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: _buildSearchBox(),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: CircleAvatar(
-              backgroundColor: Colors.orange.shade100,
-              child: const Icon(Icons.person, color: Colors.orange),
-            ),
-          ),
-        ],
       ),
 
-      // This keeps the Bottom Nav stable
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -90,11 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        onTap: (index) => setState(() => _currentIndex = index),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: "Categories"),
@@ -122,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 }
 
-/// This part holds full home page UI (banners + categories + products)
-class HomeContent extends StatelessWidget {
+// THIS WAS THE FIX — NOW STATEFUL, NOT Stateless
+class HomeContent extends StatefulWidget {
   final Future<List<Product>> productsFuture;
   final Future<List<CategoryModel>> categoriesFuture;
   final String selectedCategorySlug;
@@ -136,6 +112,13 @@ class HomeContent extends StatelessWidget {
     required this.selectedCategorySlug,
     required this.onCategorySelected,
   });
+
+  @override
+  State<HomeContent> createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
+  List<Product> productList = []; // ✅ stored here permanently
 
   @override
   Widget build(BuildContext context) {
@@ -178,16 +161,9 @@ class HomeContent extends StatelessWidget {
       );
 
   Widget _buildCategoryList() => FutureBuilder<List<CategoryModel>>(
-        future: categoriesFuture,
+        future: widget.categoriesFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Text('Error loading categories: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text("No categories available");
-          }
-
+          if (!snapshot.hasData) return const CircularProgressIndicator();
           final categories = snapshot.data!;
 
           return SingleChildScrollView(
@@ -197,13 +173,13 @@ class HomeContent extends StatelessWidget {
               children: [
                 CategoryChip(
                   category: CategoryModel(id: 0, name: "All", slug: ""),
-                  selected: selectedCategorySlug.isEmpty,
-                  onSelected: (_) => onCategorySelected(""),
+                  selected: widget.selectedCategorySlug.isEmpty,
+                  onSelected: (_) => widget.onCategorySelected(""),
                 ),
                 ...categories.map((cat) => CategoryChip(
                       category: cat,
-                      selected: cat.slug == selectedCategorySlug,
-                      onSelected: (_) => onCategorySelected(cat.slug),
+                      selected: cat.slug == widget.selectedCategorySlug,
+                      onSelected: (_) => widget.onCategorySelected(cat.slug),
                     )),
               ],
             ),
@@ -212,37 +188,45 @@ class HomeContent extends StatelessWidget {
       );
 
   Widget _buildProductGrid() => FutureBuilder<List<Product>>(
-        future: productsFuture,
+        future: widget.productsFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (!snapshot.hasData) {
             return const Padding(
               padding: EdgeInsets.only(top: 60),
               child: CircularProgressIndicator(),
             );
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text("No products available");
           }
 
-          final products = snapshot.data!;
+          /// ✅ Load products only once
+          if (productList.isEmpty) {
+            productList = snapshot.data!;
+          }
 
           return Padding(
             padding: const EdgeInsets.all(10),
             child: GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: products.length,
+              itemCount: productList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
                 childAspectRatio: 0.68,
               ),
-              itemBuilder: (_, index) =>
-                  ProductCard(product: products[index], onDelete: () {}),
+              itemBuilder: (context, index) {
+                return ProductCard(
+                  product: productList[index],
+                  onDelete: () {
+                    setState(() {
+                      productList.removeAt(index); // delete permanently
+                    });
+                  },
+                );
+              },
             ),
           );
         },
       );
 }
+
