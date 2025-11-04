@@ -1,25 +1,16 @@
-import 'package:flutter/material.dart';
 
-import '../model/product_model.dart';
+import 'package:flutter/material.dart';
+import '../services/cart_service.dart';
 
 class CartScreen extends StatefulWidget {
   static const String routeName = '/CartScreen';
   const CartScreen({Key? key}) : super(key: key);
-
-  static List<Product> cartList = [];
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  double getTotal() {
-    double total = 0;
-    for (var item in CartScreen.cartList) {
-      total += item.price;
-    }
-    return total;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +22,7 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
       ),
 
-      // If cart empty
-      body: CartScreen.cartList.isEmpty
+      body: CartService.cartList.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,9 +41,9 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: CartScreen.cartList.length,
+                    itemCount: CartService.cartList.length,
                     itemBuilder: (context, index) {
-                      final item = CartScreen.cartList[index];
+                      final item = CartService.cartList[index];
                       return Card(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8),
@@ -64,7 +54,6 @@ class _CartScreenState extends State<CartScreen> {
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
                             children: [
-                              // Product Image
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
@@ -74,20 +63,15 @@ class _CartScreenState extends State<CartScreen> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-
                               const SizedBox(width: 12),
-
-                              // Product Info
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      item.title,
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                    Text(item.title,
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 5),
                                     Text(
                                       "\$${item.price}",
@@ -99,14 +83,12 @@ class _CartScreenState extends State<CartScreen> {
                                   ],
                                 ),
                               ),
-
-                              // Delete Button
                               IconButton(
                                 icon: const Icon(Icons.delete,
                                     color: Colors.deepOrange, size: 28),
                                 onPressed: () {
                                   setState(() {
-                                    CartScreen.cartList.removeAt(index);
+                                    CartService.removeFromCart(index);
                                   });
                                 },
                               ),
@@ -118,7 +100,6 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
 
-                // Footer: Total + Checkout
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -134,17 +115,14 @@ class _CartScreenState extends State<CartScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Total Price
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Total",
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.grey),
-                          ),
+                          const Text("Total",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.grey)),
                           Text(
-                            "\$${getTotal()}",
+                            "\$${CartService.getTotal()}",
                             style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
@@ -152,8 +130,6 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ],
                       ),
-
-                      // Checkout button
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepOrange,
@@ -170,7 +146,8 @@ class _CartScreenState extends State<CartScreen> {
                         },
                         child: const Text(
                           "Checkout",
-                          style: TextStyle(fontSize: 18 , color: Colors.white),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       )
                     ],
