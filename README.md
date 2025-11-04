@@ -79,39 +79,39 @@ Below are UI screenshots from the app (images live in `assets/screens/`). Each r
 <!-- Images gallery: use an HTML table so images render 3-per-row side-by-side on GitHub and other Markdown renderers -->
 <table>
   <tr>
-    <td align="center"><img src="assets/screens/splash_screen.png" alt="Splash Screen" width="280"/></td>
-    <td align="center"><img src="assets/screens/onboarding_1.png" alt="Onboarding 1" width="280"/></td>
-    <td align="center"><img src="assets/screens/onboarding_2.png" alt="Onboarding 2" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Splash Screen</strong></div><img src="assets/screens/splash_screen.png" alt="Splash Screen" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Onboarding 1</strong></div><img src="assets/screens/onboarding_1.png" alt="Onboarding 1" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Onboarding 2</strong></div><img src="assets/screens/onboarding_2.png" alt="Onboarding 2" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/onboarding_3.png" alt="Onboarding 3" width="280"/></td>
-    <td align="center"><img src="assets/screens/login_screen.png" alt="Login Screen" width="280"/></td>
-    <td align="center"><img src="assets/screens/signup_screen.png" alt="Sign Up" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Onboarding 3</strong></div><img src="assets/screens/onboarding_3.png" alt="Onboarding 3" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Login Screen</strong></div><img src="assets/screens/login_screen.png" alt="Login Screen" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Sign Up</strong></div><img src="assets/screens/signup_screen.png" alt="Sign Up" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/forget_pass_screen.png" alt="Forgot Password" width="280"/></td>
-    <td align="center"><img src="assets/screens/reset_pass_screen.png" alt="Reset Password" width="280"/></td>
-    <td align="center"><img src="assets/screens/success_login.png" alt="Success Login" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Forgot Password</strong></div><img src="assets/screens/forget_pass_screen.png" alt="Forgot Password" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Reset Password</strong></div><img src="assets/screens/reset_pass_screen.png" alt="Reset Password" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Success Login</strong></div><img src="assets/screens/success_login.png" alt="Success Login" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/home_screen.png" alt="Home Screen" width="280"/></td>
-    <td align="center"><img src="assets/screens/products_details.png" alt="Product Details" width="280"/></td>
-    <td align="center"><img src="assets/screens/cart_add.png" alt="Cart Add" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Home Screen</strong></div><img src="assets/screens/home_screen.png" alt="Home Screen" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Product Details</strong></div><img src="assets/screens/products_details.png" alt="Product Details" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Cart Add</strong></div><img src="assets/screens/cart_add.png" alt="Cart Add" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/cart_delet.png" alt="Cart Delete" width="280"/></td>
-    <td align="center"><img src="assets/screens/categories_screen.png" alt="Categories" width="280"/></td>
-    <td align="center"><img src="assets/screens/categories_screen_1.png" alt="Categories Alt" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Cart Delete</strong></div><img src="assets/screens/cart_delet.png" alt="Cart Delete" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Categories</strong></div><img src="assets/screens/categories_screen.png" alt="Categories" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Categories (Alt)</strong></div><img src="assets/screens/categories_screen_1.png" alt="Categories Alt" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/categories_sections.png" alt="Categories Sections" width="280"/></td>
-    <td align="center"><img src="assets/screens/categories_sections_1.png" alt="Categories Sections Alt" width="280"/></td>
-    <td align="center"><img src="assets/screens/each_categories_.png" alt="Each Category" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Categories Sections</strong></div><img src="assets/screens/categories_sections.png" alt="Categories Sections" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Categories Sections (Alt)</strong></div><img src="assets/screens/categories_sections_1.png" alt="Categories Sections Alt" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Each Category</strong></div><img src="assets/screens/each_categories_.png" alt="Each Category" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screens/example.png" alt="Example" width="280"/></td>
-    <td align="center"><img src="assets/screens/profile_section.png" alt="Profile Section" width="280"/></td>
-    <td align="center"><img src="assets/screens/example.png" alt="Example duplicate" width="280"/></td>
+    <td style="text-align:center;"><div><strong>Example</strong></div><img src="assets/screens/example.png" alt="Example" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Profile Section</strong></div><img src="assets/screens/profile_section.png" alt="Profile Section" style="max-width:280px; width:100%; height:auto;"/></td>
+    <td style="text-align:center;"><div><strong>Example (duplicate)</strong></div><img src="assets/screens/example.png" alt="Example duplicate" style="max-width:280px; width:100%; height:auto;"/></td>
   </tr>
 </table>
 
@@ -139,4 +139,3 @@ Below are UI screenshots from the app (images live in `assets/screens/`). Each r
 - Categories Sections — Shows subsections inside a selected category to help users narrow results (subcategories, featured lists). Loads specific lists via GET /categories/:id/sections or GET /products?section=:id.
 - Categories Sections (alt) — Alternate sectioned layout for categories; may show filters or promotional tiles. APIs: same as above (GET /categories/:id/sections, GET /products).
 - Each Category — Item listing view for a single category; users can tap items to view details. Uses GET /products?category=:id with pagination and filter parameters.
-
