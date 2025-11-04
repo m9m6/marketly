@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:marketly/screens/cart_screen.dart';
 import 'package:marketly/screens/categories_screen.dart';
 import 'package:marketly/screens/login_screen.dart';
+import 'package:marketly/screens/otp_screen.dart';
 import 'package:marketly/screens/profile_screen.dart';
+import 'package:marketly/screens/reset_password.dart';
 import 'package:marketly/screens/sign_up_screen.dart';
 import 'package:marketly/screens/splash_screen.dart';
 import 'onboarding_Screens/onboarding_screen.dart';
@@ -30,7 +32,8 @@ class Marketly extends StatelessWidget {
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
         CartScreen.routeName: (context) => const CartScreen(),
         ProfileScreen.routeName: (context) =>  ProfileScreen(),
-
+        OtpScreen.routeName: (context) =>  OtpScreen(),
+        ResetPasswordScreen.routeName: (context) =>  ResetPasswordScreen(),
 
       },
     );

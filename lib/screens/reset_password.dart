@@ -3,9 +3,10 @@ import '../services/user_service.dart';
 import 'login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
+  static const String routeName = '/ResetPasswordScreen';
+
   const ResetPasswordScreen({super.key});
 
-  static const String routeName = '/reset-password';
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();

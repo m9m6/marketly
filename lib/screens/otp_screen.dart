@@ -3,9 +3,10 @@ import 'package:marketly/screens/reset_password.dart';
 import '../services/user_service.dart';
 
 class OtpScreen extends StatefulWidget {
+  static const String routeName = '/OtpScreen';
+
   const OtpScreen({super.key});
 
-  static const String routeName = '/otp';
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
