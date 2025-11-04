@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
 import '../model/category_model.dart';
 import '../model/product_model.dart';
+import 'package:dio/dio.dart';
+
 
 class ApiService {
   static final Dio _dio = Dio(

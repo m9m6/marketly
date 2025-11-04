@@ -1,8 +1,11 @@
-import 'package:finalapp/services/user_service.dart';
-import 'package:finalapp/widgets_screen/profile_item.dart';
 import 'package:flutter/material.dart';
 
+import '../services/user_service.dart';
+import '../widgets/profile_item.dart';
+
 class ProfileScreen extends StatefulWidget {
+  static const String routeName = '/ProfileScreen';
+
   const ProfileScreen({super.key});
 
   @override

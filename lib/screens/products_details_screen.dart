@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/product_model.dart';
-import 'package:flutter_application_1/widgets/product_details/small_dot.dart';
-import 'package:flutter_application_1/widgets/product_details/spec_tile.dart';
-import 'package:flutter_application_1/widgets/product_details/rating_bars.dart';
-import 'package:flutter_application_1/widgets/product_details/review_card.dart';
-import 'package:flutter_application_1/widgets/product_details/related_item.dart';
+
+import '../model/product_model.dart';
+import '../widgets/product_details/rating_bars.dart';
+import '../widgets/product_details/related_item.dart';
+import '../widgets/product_details/review_card.dart';
+import '../widgets/product_details/small_dot.dart';
+import '../widgets/product_details/spec_tile.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
