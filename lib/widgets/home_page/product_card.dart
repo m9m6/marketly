@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/cart_service.dart';
 import '../../../model/product_model.dart';
 import '../../screens/products_details_screen.dart';
 import '../../screens/cart_screen.dart';
@@ -129,8 +130,7 @@ class _ProductCardState extends State<ProductCard> {
               top: 8,
               child: InkWell(
                 onTap: () {
-                  CartScreen.cartList.add(widget.product);
-
+                  CartService.addToCart(widget.product);                     
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("${widget.product.title} added to cart"),
@@ -159,4 +159,3 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
-
