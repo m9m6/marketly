@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/cart_service.dart';
 import '../../../model/product_model.dart';
 import '../../screens/products_details_screen.dart';
 import '../../screens/cart_screen.dart';
+import '../../services/cart_service.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;

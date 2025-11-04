@@ -5,7 +5,12 @@ class RelatedItem extends StatelessWidget {
   final String price;
   final String image;
 
-  const RelatedItem({super.key, required this.title, required this.price, required this.image});
+  const RelatedItem({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +26,22 @@ class RelatedItem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,
-                  style:
-                      const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               const SizedBox(height: 4),
-              Text(price,
-                  style: const TextStyle(
-                      fontSize: 16, color: Colors.orange, fontWeight: FontWeight.bold)),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ],

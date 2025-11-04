@@ -29,7 +29,7 @@ class Marketly extends StatelessWidget {
         HomeScreen.routeName: (context) => const HomeScreen(),
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
         CartScreen.routeName: (context) => const CartScreen(),
-        ProfileScreen.routeName: (context) => const ProfileScreen(),
+        ProfileScreen.routeName: (context) =>  ProfileScreen(),
 
 
       },
