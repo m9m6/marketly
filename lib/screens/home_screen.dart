@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/cart_screen.dart';
-import 'package:flutter_application_1/screens/categories_screen.dart';
 
 import '../model/category_model.dart';
 import '../model/product_model.dart';
@@ -9,6 +7,8 @@ import '../services/api_service.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/home_page/product_card.dart';
 import '../widgets/home_page/promo_card.dart';
+import 'cart_screen.dart';
+import 'categories_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
