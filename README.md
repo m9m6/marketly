@@ -39,7 +39,7 @@ It allows users to:
 - **Update user profiles**  
 - **View product details** and prices  
 
-The app fetches **real product data via APIs** and offers a **responsive interface** for Android, iOS, and Web platforms.  
+The app fetches **real product data via APIs** and offers a **responsive interface** for Android, and iOS.  
 </div>
 
 </div>
