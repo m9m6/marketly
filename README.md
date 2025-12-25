@@ -13,7 +13,7 @@ Browse products, manage your cart, create an account, and update your profile �
 
 ## 🛍️ App Preview
 
-<img src="demo/demo.gif" width="800" alt="Marketly App Demo" />
+<img src="demo/dimo.gif" width="800" alt="Marketly App Demo" />
 
 <br/><br/>
 
