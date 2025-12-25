@@ -3,7 +3,7 @@
 <h1>🛒 Marketly APP</h1>
 
 <b>Your modern e-commerce shopping experience.</b><br/>
-Browse products, manage your cart, create an account, and update your profile — all in a clean and responsive Flutter app.
+Browse products, manage your cart, create an account, and update your profile,all in a clean and responsive Flutter app.
 
 </div>
 
