@@ -17,7 +17,7 @@ Browse products, manage your cart, create an account, and update your profile â€
 
 <br/><br/>
 
-<a href="https://github.com/m9m6/Marketly_App.git" target="_blank">
+<a href="https://drive.google.com/file/d/1hmvCFCsO26YRAxxgrIuoynSzBHwjKUDK/view?usp=drive_link" target="_blank">
   ðŸ‘‰ <b>Click here to see the full Demo</b>
 </a>
 
