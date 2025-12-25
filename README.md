@@ -18,7 +18,7 @@ Browse products, manage your cart, create an account, and update your profile �
 <br/><br/>
 
 <a href="https://drive.google.com/file/d/1hmvCFCsO26YRAxxgrIuoynSzBHwjKUDK/view?usp=drive_link" target="_blank">
-  👉 <b>Click here to see the full Demo</b>
+  👉 <b>Click here to see the full demo for the entire app</b>
 </a>
 
 </div>
